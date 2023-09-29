@@ -1,9 +1,11 @@
 :root {
     --rounded-font: 'M PLUS ROUNDED 1c';
-    --color-bg: #352F44;
-    --color-low: #5C5470;
-    --color-high: #B9B4C7;
-    --color-fg: #FAF0E6;
+    --color-bg: #212121;
+    --color-low: #303030;
+    --color-fg: #FFFFFF;
+    --color-primary: #3E50B4;
+    --color-accent: #FF3F80;
+    --color-error: #B00020;
 }
 
 * {
@@ -19,8 +21,16 @@ body {
 header {
     display: flex;
     align-items: center;
-    background-color: var(--color-high);
+    background-color: var(--color-low);
     padding: 0.3rem 1rem;
+    margin-bottom: 2rem;
+
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    border-left: 2px solid var(--color-high);
+    border-right: 2px solid var(--color-high);
+    border-bottom: 6px solid var(--color-high);
 }
 
 .tagline {
@@ -62,4 +72,7 @@ header .icons li:nth-child(1) {
     background-color: var(--color-bg);
 }
 
-
+.editbox {
+    width: 100%;
+    resize: none;
+}
