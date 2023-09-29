@@ -37,10 +37,24 @@ header {
     flex-direction: row;
     flex-grow: 1;
     font-family: var(--rounded-font);
+
+    color: var(--color-fg);
 }
 
 .tagline h1 {
     font-size: 1.5rem;
+}
+
+.tagline h1:hover {
+    color: var(--color-primary);
+}
+
+i {
+    color: var(--color-fg);
+}
+
+i:hover {
+    color: var(--color-primary);
 }
 
 header .icons {
@@ -72,7 +86,51 @@ header .icons li:nth-child(1) {
     background-color: var(--color-bg);
 }
 
+.start-note {
+    display: flex;
+}
+
 .editbox {
-    width: 100%;
+    flex-grow: 1;
+    margin-bottom: 2rem;
+
+    border: 3px solid var(--color-primary);
+    border-radius: 5px;
+    background-color: var(--color-low);
+    color: var(--color-fg);
     resize: none;
+}
+
+.note-entries {
+    width: 100%;
+    border-collapse: collapse;
+    display: flex;
+    flex-direction: column;
+    
+    border-radius: 5px;
+}
+
+.note-entries tr {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    height: 2.5rem;
+
+    background-color: var(--color-low);
+    border-radius: 5px;
+}
+
+.note-entries tr :first-child{
+    flex-grow: 1;
+    align-content: center;
+    margin-left: 1rem;
+
+    border-radius: 5px;
+}
+
+.note-entries td {
+    margin-right: 1rem;
+
+    font-family: var(--rounded-font);
+    color: var(--color-fg);
 }
