@@ -91,17 +91,40 @@ header .icons li:nth-child(1) {
 }
 
 .editbox {
-    flex-grow: 1;
-    margin-bottom: 2rem;
+    width: 100%;
+    margin-bottom: 3rem;
+    padding-left: 1rem;
+    height: 2.5rem;
 
-    border: 3px solid var(--color-primary);
+    border: 1px solid var(--color-fg);
+    border-left: 1px solid var(--color-fg);
+    border-right: 1px solid var(--color-fg);
+    border-bottom: 4px solid var(--color-fg);
     border-radius: 5px;
     background-color: var(--color-low);
     color: var(--color-fg);
+    font-family: var(--rounded-font);
+    font-size: 1rem;
     resize: none;
 }
 
-.note-entries {
+.editbox:focus,
+.editbox:hover {
+    border: 1px solid var(--color-primary);
+    border-left: 1px solid var(--color-primary);
+    border-right: 1px solid var(--color-primary);
+    border-bottom: 4px solid var(--color-primary);
+    outline: none;
+    
+}
+
+.editbox::placeholder {
+
+    font-size: 1rem;
+    font-family: var(--rounded-font);
+}
+
+.task-list {
     width: 100%;
     border-collapse: collapse;
     display: flex;
@@ -110,7 +133,7 @@ header .icons li:nth-child(1) {
     border-radius: 5px;
 }
 
-.note-entries tr {
+.task-list tr {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
@@ -118,9 +141,10 @@ header .icons li:nth-child(1) {
 
     background-color: var(--color-low);
     border-radius: 5px;
+    border: 1px solid var(--color-fg);
 }
 
-.note-entries tr :first-child{
+.task-list tr :first-child{
     flex-grow: 1;
     align-content: center;
     margin-left: 1rem;
@@ -128,7 +152,7 @@ header .icons li:nth-child(1) {
     border-radius: 5px;
 }
 
-.note-entries td {
+.task-list td {
     margin-right: 1rem;
 
     font-family: var(--rounded-font);
