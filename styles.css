@@ -1,0 +1,65 @@
+:root {
+    --rounded-font: 'M PLUS ROUNDED 1c';
+    --color-bg: #352F44;
+    --color-low: #5C5470;
+    --color-high: #B9B4C7;
+    --color-fg: #FAF0E6;
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0 25%;
+}
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-high);
+    padding: 0.3rem 1rem;
+}
+
+.tagline {
+    flex-direction: row;
+    flex-grow: 1;
+    font-family: var(--rounded-font);
+}
+
+.tagline h1 {
+    font-size: 1.5rem;
+}
+
+header .icons {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+header .icons li {
+    font-size: 1.5rem;
+}
+
+header .icons li:nth-child(1) {
+    margin-right: 2rem;
+}
+
+/* #############
+   ## MAIN #####
+   ############# */
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -99;
+
+    background-color: slategrey;
+}
+
+
