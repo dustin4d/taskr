@@ -59,7 +59,7 @@ header .icons li:nth-child(1) {
     height: 100%;
     z-index: -99;
 
-    background-color: slategrey;
+    background-color: var(--color-bg);
 }
 
 
