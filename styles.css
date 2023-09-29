@@ -71,10 +71,6 @@ header .icons li:nth-child(1) {
     margin-right: 2rem;
 }
 
-/* #############
-   ## MAIN #####
-   ############# */
-
 .backdrop {
     position: fixed;
     top: 0;
@@ -157,4 +153,14 @@ header .icons li:nth-child(1) {
 
     font-family: var(--rounded-font);
     color: var(--color-fg);
+}
+
+td i {
+    color: var(--color-fg);
+    font-size: 1.2rem;
+}
+
+td i:hover {
+    color: var(--color-primary);
+    cursor: pointer;
 }
