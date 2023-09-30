@@ -31,11 +31,22 @@ const addTask = (description) => {
             }
         },
         edit: () => {
-
+            console.log(Task.description); 
+            // put focus back on editbox
+            // pressing Enter will add that Task back to the `index` of currentTasks
+            input.value = Task.description;
+        
+            const index = currentTasks.findIndex(t => t.id === Task.id);
+            if (index > -1) {
+            currentTasks.splice(index, 1);
+            renderTasks();
+           }
+           input.focus();
         },
     }
+    
     // Push this new task to the `currentTasks` array
-    currentTasks.push(Task);
+    currentTasks.unshift(Task);
 }
 
 const attachSubmitListener = () => {
@@ -74,6 +85,7 @@ const renderTasks = () => {
         // Create cell for edit button
         const btnEditTask = document.createElement('td');
         btnEditTask.innerHTML = '<i class="fa-solid fa-pen-to-square btn-TaskEdit"></i>';
+        btnEditTask.addEventListener('click', () => task.edit());
 
         // Create cell for delete button
         const btnDeleteTask = document.createElement('td');
