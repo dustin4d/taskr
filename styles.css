@@ -21,6 +21,7 @@ body {
 header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background-color: var(--color-low);
     padding: 0.3rem 1rem;
     margin-bottom: 3rem;
@@ -34,10 +35,10 @@ header {
 }
 
 .tagline {
+    display: flex;
     flex-direction: row;
-    flex-grow: 1;
-    font-family: var(--rounded-font);
 
+    font-family: var(--rounded-font);
     color: var(--color-fg);
 }
 
@@ -47,6 +48,7 @@ header {
 
 .tagline h1:hover {
     color: var(--color-primary);
+    cursor: pointer;
 }
 
 i {
