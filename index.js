@@ -5,7 +5,6 @@ window.onload = () => {
 
 // Entry point
 const App = () => {
-    console.log("Initializing app...");
     attachSubmitListener();
 }
 
@@ -20,8 +19,8 @@ const table = document.querySelector(".task-list");
 const addTask = (description) => {
     // Create new Task object
     const Task = {
-        id: currentTasks.length + 1,
-        description: description,
+        id: currentTasks.length + 1, // ID starts at 1 instead of 0.
+        description: description,    // `description` = `text` from the input element
 
         delete: () => {
             const index = currentTasks.findIndex(t => t.id === Task.id); // Run function for each array element, check against Task.id
@@ -30,7 +29,7 @@ const addTask = (description) => {
             renderTasks(); // Update the list of tasks
             }
         },
-        edit: () => {
+        edit: () => {  // May need to change to editMode
             console.log(Task.description); 
             // put focus back on editbox
             // pressing Enter will add that Task back to the `index` of currentTasks
@@ -42,10 +41,13 @@ const addTask = (description) => {
             renderTasks();
            }
            input.focus();
+
+           // Might need to addEventListener specifically for editMode, so replacing a note is easily doable.
+           // Seems to be the easiest way without writing Task.replace() method
         },
     }
     
-    // Push this new task to the `currentTasks` array
+    // Then add the newly created Task to the array
     currentTasks.unshift(Task);
 }
 
@@ -53,11 +55,10 @@ const attachSubmitListener = () => {
     // Submit eventListener
     document.getElementById('createTask').addEventListener('submit', function(event){
     /* Prevent form from doing default behavior using an anonymous function that will use
-    * the event's object as a parameter for the `.addEventListener()` method.
-    */
+    * the event's object as a parameter for the `.addEventListener()` method. */
     event.preventDefault();
 
-    const text = input.value.trim();
+    const text = input.value.trim(); // Disallows only spaces
     if (text) {
         addTask(text);
         renderTasks();
