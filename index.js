@@ -34,6 +34,7 @@ const addTask = (description) => {
             // put focus back on editbox
             // pressing Enter will add that Task back to the `index` of currentTasks
             input.value = Task.description;
+            input.style.borderColor = '#ffff74';
         
             const index = currentTasks.findIndex(t => t.id === Task.id);
             if (index > -1) {
@@ -42,34 +43,42 @@ const addTask = (description) => {
            }
            input.focus();
 
-           // Might need to addEventListener specifically for editMode, so replacing a note is easily doable.
-           // Seems to be the easiest way without writing Task.replace() method
+           const editSubmitListener = (event) => {
+            event.preventDefault();
+            const newText = input.value.trim();
+            if (newText) {
+                Task.description = newText;
+                currentTasks.splice(index, 0, Task);
+                renderTasks();
+                input.value = null;
+                input.style.borderColor = '';
+
+                document.getElementById('createTask').removeEventListener('submit', editSubmitListener);
+                attachSubmitListener();
+                }
+           }
+            document.getElementById('createTask').removeEventListener('submit', submitListener);
+            document.getElementById('createTask').addEventListener('submit', editSubmitListener);
         },
-    }
+    };
+   
     
     // Then add the newly created Task to the array
     currentTasks.unshift(Task);
 }
 
 const attachSubmitListener = () => {
-    // Submit eventListener
-    document.getElementById('createTask').addEventListener('submit', function(event){
-    /* Prevent form from doing default behavior using an anonymous function that will use
-    * the event's object as a parameter for the `.addEventListener()` method. */
-    event.preventDefault();
+    document.getElementById('createTask').addEventListener('submit', submitListener);
+}
 
-    const text = input.value.trim(); // Disallows only spaces
+const submitListener = (event) => {
+    event.preventDefault();
+    const text = input.value.trim();
     if (text) {
         addTask(text);
         renderTasks();
-        input.value = null; // Clear the input field
-        }
-    })
-}
-
-const attachDeleteListener = () => {
-    //document.querySelector('btn-TaskDelete').addEventListener('click', this.delete());
-    console.log("Delete");
+        input.value = null;
+    }
 }
 
 const renderTasks = () => {
