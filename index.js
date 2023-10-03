@@ -1,85 +1,85 @@
 // Initialization
 window.onload = () => {
-    App();
+    loadTasks();    // Load data from browser storage
+    renderTasks();  // Render DOM elements for any data loaded
+    attachSubmitListener(); // Attach eventListener on input element
 }
 
-// Entry point
-const App = () => {
-    attachSubmitListener();
-}
+let currentTasks = [];
 
-const currentTasks = [];
-
-//// Globally Scoped Selectors
-// Select the `<input>` element
+// Globally Scoped Selectors
 const input = document.querySelector('.editbox');
-// Select <table> element
 const table = document.querySelector(".task-list");
+let currentEditIndex = null;    // For tracking if you're editing a task or not
 
-const addTask = (description) => {
-    // Create new Task object
+const addTask = (description, edit = false) => {
     const Task = {
-        id: currentTasks.length + 1, // ID starts at 1 instead of 0.
-        description: description,    // `description` = `text` from the input element
-
-        delete: () => {
-            const index = currentTasks.findIndex(t => t.id === Task.id); // Run function for each array element, check against Task.id
-            if (index > -1) { // If the array isn't empty basically
-            currentTasks.splice(index, 1); // Start splice at the Task's index, `1` selects it
-            renderTasks(); // Update the list of tasks
-            }
-        },
-        edit: () => {  // May need to change to editMode
-            console.log(Task.description); 
-            // put focus back on editbox
-            // pressing Enter will add that Task back to the `index` of currentTasks
-            input.value = Task.description;
-            input.style.borderColor = '#ffff74';
-        
-            const index = currentTasks.findIndex(t => t.id === Task.id);
-            if (index > -1) {
-            currentTasks.splice(index, 1);
-            renderTasks();
-           }
-           input.focus();
-
-           const editSubmitListener = (event) => {
-            event.preventDefault();
-            const newText = input.value.trim();
-            if (newText) {
-                Task.description = newText;
-                currentTasks.splice(index, 0, Task);
-                renderTasks();
-                input.value = null;
-                input.style.borderColor = '';
-
-                document.getElementById('createTask').removeEventListener('submit', editSubmitListener);
-                attachSubmitListener();
-                }
-           }
-            document.getElementById('createTask').removeEventListener('submit', submitListener);
-            document.getElementById('createTask').addEventListener('submit', editSubmitListener);
-        },
+        id: currentTasks.length + 1,
+        description: description,
     };
-   
-    
-    // Then add the newly created Task to the array
-    currentTasks.unshift(Task);
+
+    if (currentEditIndex !== null) {
+        currentTasks.splice(currentEditIndex, 0, Task); // Add the task back to where it was
+        currentEditIndex = null;    // Reset the edit indicator back to null
+    } else {
+        currentTasks.unshift(Task);
+    } 
+    saveTasks();
+};
+
+const editTask = (taskId) => {
+    const task = currentTasks.find(t => t.id === taskId); // Find the task from the array that matches current task's ID
+    const taskIndex = currentTasks.findIndex(t => t.id === taskId);
+    if (task) { // and if that task exists,
+        currentEditIndex = taskIndex; // Turn on edit mode,
+        currentTasks.splice(taskIndex, 1); // Remove it from the array
+        input.value = task.description; // Pre-populate the input box with the task's data
+        input.focus(); // focus the element
+        input.style.borderColor = '#ffff74'; // and make it look yellow. Because yellow means edit.
+        renderTasks();
+    };
+};
+
+const deleteTask = (taskId) => {
+    const index = currentTasks.findIndex(t => t.id === taskId); // Iterate through and find index that matches taskId,
+    console.log(taskId);
+    if (index > -1) { // if successful,
+        currentTasks.splice(index, 1); // Start at `index` and delete that position
+        saveTasks(); // Save the changes to browser storage
+        renderTasks();
+    }
 }
+
+const saveTasks = () => {
+    // Create a storage called `tasks`, and input stringified `currentTasks` in it.
+    localStorage.setItem('tasks', JSON.stringify(currentTasks));
+};
+
+const loadTasks = () => {
+    // Load the data in localStorage, convert it back to what it was originally if data is present.
+    const storedTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (storedTasks) {
+        currentTasks = storedTasks; 
+    }
+};
 
 const attachSubmitListener = () => {
     document.getElementById('createTask').addEventListener('submit', submitListener);
-}
+};
 
 const submitListener = (event) => {
     event.preventDefault();
     const text = input.value.trim();
     if (text) {
-        addTask(text);
+        if (currentEditIndex !== null) {
+            addTask(text, true);
+        } else {
+            addTask(text);
+        }
         renderTasks();
         input.value = null;
-    }
-}
+    };
+};
 
 const renderTasks = () => {
     table.innerHTML = "";
@@ -95,12 +95,16 @@ const renderTasks = () => {
         // Create cell for edit button
         const btnEditTask = document.createElement('td');
         btnEditTask.innerHTML = '<i class="fa-solid fa-pen-to-square btn-TaskEdit"></i>';
-        btnEditTask.addEventListener('click', () => task.edit());
+        btnEditTask.addEventListener('click', () => {
+            editTask(task.id);
+        });
 
         // Create cell for delete button
         const btnDeleteTask = document.createElement('td');
         btnDeleteTask.innerHTML = '<i class="fa-solid fa-trash btn-TaskDelete"></i>';
-        btnDeleteTask.addEventListener('click', () => task.delete());
+        btnDeleteTask.addEventListener('click', () => {
+            deleteTask(task.id);
+        });
 
         // Iterate through array and append each array item to the `<tr>`
         [newTaskCell, btnEditTask, btnDeleteTask].forEach(cell => newTask.appendChild(cell));
@@ -108,4 +112,4 @@ const renderTasks = () => {
         // Append the new `<tr>` to the table :)
         table.appendChild(newTask);
     })
-}
+};
