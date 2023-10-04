@@ -12,19 +12,26 @@ const input = document.querySelector('.editbox');
 const table = document.querySelector(".task-list");
 let currentEditIndex = null;    // For tracking if you're editing a task or not
 
-const addTask = (description, edit = false) => {
-    const Task = {
-        id: currentTasks.length + 1,
-        description: description,
-    };
+// Use separate control flow for object creation based on editMode on or off.
+const addTask = (description) => {
+    let Task;   // Init an object
 
-    if (currentEditIndex !== null) {
-        currentTasks.splice(currentEditIndex, 0, Task); // Add the task back to where it was
-        currentEditIndex = null;    // Reset the edit indicator back to null
-    } else {
-        currentTasks.unshift(Task);
-    } 
-    saveTasks();
+    if (currentEditIndex !== null){ // If we're in edit mode,
+        Task = {
+            id: currentTasks[currentEditIndex].id, // Use the original index from when it was added
+            description: description,  // and pass in the description.
+        };
+        currentTasks.splice(currentEditIndex, 0, Task);
+    } else { // If this is a NEW task
+        Task = {
+            id: currentTasks.length + 1, // Don't want to zero-index my IDs
+            description: description, // Pass in the description,
+        };
+        currentTasks.unshift(Task); // and add it to the first index.
+    }
+
+    saveTasks(); // Save changes to localStorage in the browser
+    renderTasks(); // Update the DOM to reflect data changes.
 };
 
 const editTask = (taskId) => {
@@ -37,9 +44,13 @@ const editTask = (taskId) => {
         input.focus(); // focus the element
         input.style.borderColor = '#ffff74'; // and make it look yellow. Because yellow means edit.
         renderTasks();
+
+        // Debug
+        console.log(`Editing task: "${task.description}", at index ${currentEditIndex}`);
     };
 };
 
+// TODO: Fix this so that it detects edit mode and deletes the appropriate task
 const deleteTask = (taskId) => {
     const index = currentTasks.findIndex(t => t.id === taskId); // Iterate through and find index that matches taskId,
     console.log(taskId);
