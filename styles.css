@@ -1,11 +1,13 @@
 :root {
     --rounded-font: 'M PLUS ROUNDED 1c';
-    --color-bg: #212121;
+    --color-bg: #312e2b;
     --color-low: #303030;
     --color-fg: #FFFFFF;
     --color-primary: #3E50B4;
-    --color-accent: #FF3F80;
-    --color-error: #B00020;
+    --color-button: #262522;
+    --color-button-shadow: #171614;
+    --color-green-dark: #45753c;
+    --color-green-lite: #5d9948;
 }
 
 * {
@@ -192,14 +194,36 @@ td i:hover {
 }
 
 /*  Media Queries */
+/* MOBILE */
 @media (max-width: 420px) {
     header {
+        min-height: 4rem;
         width: 100%;
         border-radius: 0;
+
+        background-color: var(--color-button);
     }
 
     .tagline h1 {
-        font-size: 1.2rem;
+        font-size: 2rem;
+    }
+
+    .editbox {
+        height: 5rem;
+        border: none;
+        background-color: var(--color-button);
+    }
+
+    .editbox:focus {
+        border: none;
+    }
+
+    .task-list tr {
+        height: 5rem;
+        border-radius: 0.5rem;
+        border: none;
+        border-bottom: 4px solid var(--color-button-shadow);
+        background-color: var(--color-button);
     }
 
     .newTask {
@@ -214,6 +238,8 @@ td i:hover {
     }
 }
 
+
+/* Ultrawide + */
 @media (min-width: 1440px) {
     header {
         margin: 0 25%;
@@ -223,10 +249,13 @@ td i:hover {
     .wrap {
         margin: 0 25%;
     }
+
     .newTask {
         max-width: 1295px;
         white-space: normal;
         overflow-wrap: break-word;
         margin: 0.5rem auto;
     }
+
+
 }
