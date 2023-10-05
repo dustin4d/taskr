@@ -88,9 +88,12 @@ header .icons li:nth-child(1) {
     display: flex;
 }
 
+#createTask {
+    margin-bottom: 3rem;
+}
+
 .editbox {
     width: 100%;
-    margin-bottom: 3rem;
     padding-left: 1rem;
     height: 2.5rem;
 
@@ -120,6 +123,19 @@ header .icons li:nth-child(1) {
 
     font-size: 1rem;
     font-family: var(--rounded-font);
+}
+
+.editIndicator {
+    margin-left: 1rem;
+    visibility: hidden;
+}
+
+.editIndicator p  {
+    position: relative;
+
+    color: #9d9d9d;
+    font-family: var(--rounded-font);
+    font-style: italic;
 }
 
 .newTask {

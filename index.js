@@ -10,6 +10,8 @@ let currentTasks = [];
 // Globally Scoped Selectors
 const input = document.querySelector('.editbox');
 const table = document.querySelector(".task-list");
+const indicator = document.querySelector('.editIndicator');
+
 let currentEditIndex = null;    // For tracking if you're editing a task or not
 
 // Use separate control flow for object creation based on editMode on or off.
@@ -22,6 +24,7 @@ const addTask = (description) => {
             description: description,  // and pass in the description.
         };
         currentTasks.splice(currentEditIndex, 0, Task); // Put the task back where it was
+        indicator.style.visibility = 'hidden';
         renderTasks();
     } else { // If this is a NEW task
         Task = {
@@ -45,12 +48,11 @@ const editTask = (taskId) => {
         input.value = task.description; // Pre-populate the input box with the task's data
         input.focus(); // focus the element
         input.style.borderColor = '#ffff74'; // and make it look yellow. Because yellow means edit.
+        indicator.style.visibility = 'visible';
         renderTasks();
-
     };
 };
 
-// TODO: Fix this so that it detects edit mode and deletes the appropriate task
 const deleteTask = (taskId) => {
     const index = currentTasks.findIndex(t => t.id === taskId); // Iterate through and find index that matches taskId,
     console.log(`Deleting task: ${index}`);
