@@ -18,24 +18,26 @@ const addTask = (description) => {
 
     if (currentEditIndex !== null){ // If we're in edit mode,
         Task = {
-            id: currentTasks[currentEditIndex].id, // Use the original index from when it was added
+            id: currentTasks[currentEditIndex], // Use the original index from when it was added
             description: description,  // and pass in the description.
         };
-        currentTasks.splice(currentEditIndex, 0, Task);
+        currentTasks.splice(currentEditIndex, 0, Task); // Put the task back where it was
+        renderTasks();
     } else { // If this is a NEW task
         Task = {
             id: currentTasks.length + 1, // Don't want to zero-index my IDs
             description: description, // Pass in the description,
         };
-        currentTasks.unshift(Task); // and add it to the first index.
+        currentTasks.push(Task); // and add it to the first index.
+        renderTasks();
     }
-
+    input.style.borderColor = ''; // Set the default color back on the input field after editing is over.
     saveTasks(); // Save changes to localStorage in the browser
-    renderTasks(); // Update the DOM to reflect data changes.
 };
 
 const editTask = (taskId) => {
     const task = currentTasks.find(t => t.id === taskId); // Find the task from the array that matches current task's ID
+    console.log(task);
     const taskIndex = currentTasks.findIndex(t => t.id === taskId);
     if (task) { // and if that task exists,
         currentEditIndex = taskIndex; // Turn on edit mode,
@@ -45,21 +47,19 @@ const editTask = (taskId) => {
         input.style.borderColor = '#ffff74'; // and make it look yellow. Because yellow means edit.
         renderTasks();
 
-        // Debug
-        console.log(`Editing task: "${task.description}", at index ${currentEditIndex}`);
     };
 };
 
 // TODO: Fix this so that it detects edit mode and deletes the appropriate task
 const deleteTask = (taskId) => {
     const index = currentTasks.findIndex(t => t.id === taskId); // Iterate through and find index that matches taskId,
-    console.log(taskId);
+    console.log(`Deleting task: ${index}`);
     if (index > -1) { // if successful,
         currentTasks.splice(index, 1); // Start at `index` and delete that position
         saveTasks(); // Save the changes to browser storage
         renderTasks();
     }
-}
+};
 
 const saveTasks = () => {
     // Create a storage called `tasks`, and input stringified `currentTasks` in it.
