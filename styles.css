@@ -13,8 +13,8 @@
     box-sizing: border-box;
 }
 
-body {
-    margin: 0 25%;
+.wrap {
+    margin: 0 5%;
 }
 
 /* Header */
@@ -189,4 +189,44 @@ td i {
 td i:hover {
     color: var(--color-primary);
     cursor: pointer;
+}
+
+/*  Media Queries */
+@media (max-width: 420px) {
+    header {
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .tagline h1 {
+        font-size: 1.2rem;
+    }
+
+    .newTask {
+    max-width: 225px;
+    white-space: normal;
+    overflow-wrap: break-word;
+    margin: 0.5rem auto;
+    }
+    
+    .wrap {
+        margin: 0 3%;
+    }
+}
+
+@media (min-width: 1440px) {
+    header {
+        margin: 0 25%;
+        margin-bottom: 3rem;
+    }
+
+    .wrap {
+        margin: 0 25%;
+    }
+    .newTask {
+        max-width: 1295px;
+        white-space: normal;
+        overflow-wrap: break-word;
+        margin: 0.5rem auto;
+    }
 }
